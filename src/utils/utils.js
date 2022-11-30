@@ -92,3 +92,53 @@ export const complementaryColor = (color) => {
 
   return complementary;
 };
+
+export const generateGlobalVars = (tints, shades, color) => {
+  const { hex } = color;
+  const globalVars = [
+    { color: "", var: "--primary-100" },
+    { color: "", var: "--primary-200" },
+    { color: "", var: "--primary-300" },
+    { color: "", var: "--primary-400" },
+    { color: "", var: "--primary-500" },
+    { color: "", var: "--primary-600" },
+    { color: "", var: "--primary-700" },
+    { color: "", var: "--primary-800" },
+    { color: "", var: "--primary-900" },
+  ];
+  globalVars[4].color = hex;
+  // tints = [{r,g,b}, {r,g,b}]
+  const reverseTints = [...tints].reverse();
+  for (let i = 0; i < 4; i++) {
+    const hexColor = `#${rgbToHex(reverseTints[i].red)}${rgbToHex(
+      reverseTints[i].green
+    )}${rgbToHex(reverseTints[i].blue)}`;
+
+    globalVars[i].color = hexColor;
+  }
+  // shades = [{r, g, b}, {r, g, b}]
+  for (let i = 0; i < 4; i++) {
+    const hexColor = `#${rgbToHex(shades[i].red)}${rgbToHex(
+      shades[i].green
+    )}${rgbToHex(shades[i].blue)}`;
+
+    globalVars[i + 5].color = hexColor;
+  }
+
+  return globalVars;
+};
+
+export const copyToClipboard = (element) => {
+  element.select();
+  element.setSelectionRange(0, 99999); // For mobile devices
+
+  // Copy the text inside the text field
+  navigator.clipboard
+    .writeText(element.value)
+    .then(() => {
+      console.log("values copied");
+    })
+    .catch(() => {
+      console.log("failed to copy values!");
+    });
+};

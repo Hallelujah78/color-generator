@@ -6,32 +6,40 @@ import {
   generateRandomColor,
   generateShades,
   generateTints,
-  complementaryColor,
+  generateGlobalVars,
 } from "./utils/utils";
 
 function App() {
-  const [color, setColor] = useState(generateRandomColor());
-  const [tints, setTints] = useState([]);
-  const [shades, setShades] = useState([]);
-  const [complementary, setComplementary] = useState({});
+  const startingColor = generateRandomColor();
+
+  const [color, setColor] = useState(startingColor);
+  const [tints, setTints] = useState(generateTints(startingColor));
+  const [shades, setShades] = useState(generateShades(startingColor));
+  const [globalVars, setGlobalVars] = useState(
+    generateGlobalVars(tints, shades, startingColor)
+  );
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    setShades(generateShades(color));
-    setTints(generateTints(color));
-    setComplementary(complementaryColor(color));
-    window.scrollTo(0, 1);
+    const newTints = generateTints(color);
+    const newShades = generateShades(color);
+    setShades(newShades);
+    setTints(newTints);
+    setGlobalVars(generateGlobalVars(newTints, newShades, color));
   }, [color]);
 
   return (
     <>
       <GlobalStyle />
       <Color
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
         tints={tints}
         setTints={setTints}
         color={color}
         setColor={setColor}
         shades={shades}
-        complementary={complementary}
+        globalVars={globalVars}
       />
     </>
   );
