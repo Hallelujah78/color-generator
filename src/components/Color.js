@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import Shade from "./Shade";
 import Tint from "./Tints";
-import rainbow from "../images/drainbow.png";
+import rainbow from "../images/colorwheel_100x100.webp";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-regular-svg-icons";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
@@ -47,7 +47,6 @@ const Wrapper = styled.div`
 
     button.generate-colors {
       border: transparent;
-
       margin-top: 1rem;
       background: url(${rainbow});
       background-position: center;
