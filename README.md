@@ -1,3 +1,18 @@
+# To do
+
+- Contrast ratio for text and background color
+
+```js
+v = (r + g + b) / 3 > 128 ? 0 : 255;
+y = rgb_color(v, v, v);
+```
+
+- tool tips for clipboard icon
+- don't need a modal to notify user that values have been copied to clipboard - better to use toastify or something similar
+- replace fontawesome icons with react icons
+- PWA
+- accessibility
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
