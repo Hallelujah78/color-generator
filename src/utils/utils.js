@@ -136,9 +136,9 @@ export const copyToClipboard = (element) => {
   navigator.clipboard
     .writeText(element.value)
     .then(() => {
-      console.log("values copied");
+     
     })
     .catch(() => {
-      console.log("failed to copy values!");
+      
     });
 };
