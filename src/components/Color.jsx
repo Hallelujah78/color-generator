@@ -64,6 +64,11 @@ const Wrapper = styled.div`
       }
     }
     .copy-container {
+      button {
+        background: ${(props) => props.color || "red"};
+        border: transparent;
+      }
+
       width: 100%;
       height: 100%;
       display: grid;
@@ -174,14 +179,17 @@ const Color = ({
       </div>
       <div className="color-container">
         <div className="copy-container">
-          <FontAwesomeIcon
-            onClick={() => copyVars()}
-            className="copy-vars"
-            icon={faCopy}
-          />
+          <button aria-label="copy color values to clipboard">
+            <FontAwesomeIcon
+              onClick={() => copyVars()}
+              className="copy-vars"
+              icon={faCopy}
+            />
+          </button>
         </div>
         <div className="button-container">
           <button
+            aria-label="generate colors"
             className="generate-colors"
             type="button"
             onClick={handleClick}
