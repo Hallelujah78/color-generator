@@ -1,12 +1,90 @@
 import styled, { css } from "styled-components";
 import Shade from "./Shade";
 import Tint from "./Tints";
+
+import { FaRegCopy } from "react-icons/fa";
+import { FaTimes } from "react-icons/fa";
 import rainbow from "../images/colorwheel_100x100.webp";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCopy } from "@fortawesome/free-regular-svg-icons";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 import { generateRandomColor, copyToClipboard } from "../utils/utils";
+
+const Color = ({
+  color,
+  setColor,
+  shades,
+  tints,
+  globalVars,
+  isModalOpen,
+  setIsModalOpen,
+}) => {
+  const handleClick = () => {
+    const randomColor = generateRandomColor();
+    setColor(randomColor);
+  };
+  const copyVars = () => {
+    setIsModalOpen(true);
+    const globalVarsDom = document.querySelector(".global-vars-text");
+    copyToClipboard(globalVarsDom);
+  };
+
+  return (
+    <Wrapper
+      dark={
+        color.rgb.red < 115 && color.rgb.green < 115 && color.rgb.blue < 115
+      }
+      color={color.hex}
+      shades={shades}
+      tints={tints}
+      isModalOpen={isModalOpen}
+    >
+      <div className="shade-container">
+        {shades.map((shade, index) => {
+          return <Shade key={index} index={index} shades={shades}></Shade>;
+        })}
+      </div>
+      <div className="color-container">
+        <div className="copy-container">
+          <button aria-label="copy color values to clipboard">
+            <FaRegCopy onClick={() => copyVars()} className="copy-vars" />
+          </button>
+        </div>
+        <div className="button-container">
+          <button
+            aria-label="generate colors"
+            className="generate-colors"
+            type="button"
+            onClick={handleClick}
+          ></button>
+          <div className="color-value-container">
+            <h5>{color.hex}</h5>
+            <h5>{`${color.rgb.red},${color.rgb.green},${color.rgb.blue}`}</h5>
+          </div>
+        </div>
+      </div>
+      <div className="tint-container">
+        {tints.map((tint, index) => {
+          return <Tint key={index} index={index} tints={tints}></Tint>;
+        })}
+      </div>
+      <section className="overlay">
+        <FaTimes onClick={() => setIsModalOpen(false)} className="x-icon" />
+        <h4>values copied</h4>
+        {/* text area for global variable output */}
+        <textarea
+          readOnly
+          className="global-vars-text"
+          cols="21"
+          rows="10"
+          value={globalVars
+            .map((colorVar, index) => {
+              return `${globalVars[index].var}: ${globalVars[index].color};\n`;
+            })
+            .join("")}
+        ></textarea>
+      </section>
+    </Wrapper>
+  );
+};
 
 const Wrapper = styled.div`
   ${({ dark }) => {
@@ -139,94 +217,9 @@ const Wrapper = styled.div`
     &:hover {
       color: #c377a8;
       transform: scale(1.1);
+      cursor: pointer;
     }
   }
 `;
-
-const Color = ({
-  color,
-  setColor,
-  shades,
-  tints,
-  globalVars,
-  isModalOpen,
-  setIsModalOpen,
-}) => {
-  const handleClick = () => {
-    const randomColor = generateRandomColor();
-    setColor(randomColor);
-  };
-  const copyVars = () => {
-    setIsModalOpen(true);
-    const globalVarsDom = document.querySelector(".global-vars-text");
-    copyToClipboard(globalVarsDom);
-  };
-
-  return (
-    <Wrapper
-      dark={
-        color.rgb.red < 115 && color.rgb.green < 115 && color.rgb.blue < 115
-      }
-      color={color.hex}
-      shades={shades}
-      tints={tints}
-      isModalOpen={isModalOpen}
-    >
-      <div className="shade-container">
-        {shades.map((shade, index) => {
-          return <Shade key={index} index={index} shades={shades}></Shade>;
-        })}
-      </div>
-      <div className="color-container">
-        <div className="copy-container">
-          <button aria-label="copy color values to clipboard">
-            <FontAwesomeIcon
-              onClick={() => copyVars()}
-              className="copy-vars"
-              icon={faCopy}
-            />
-          </button>
-        </div>
-        <div className="button-container">
-          <button
-            aria-label="generate colors"
-            className="generate-colors"
-            type="button"
-            onClick={handleClick}
-          ></button>
-          <div className="color-value-container">
-            <h5>{color.hex}</h5>
-            <h5>{`${color.rgb.red},${color.rgb.green},${color.rgb.blue}`}</h5>
-          </div>
-        </div>
-      </div>
-      <div className="tint-container">
-        {tints.map((tint, index) => {
-          return <Tint key={index} index={index} tints={tints}></Tint>;
-        })}
-      </div>
-      <section className="overlay">
-        <FontAwesomeIcon
-          onClick={() => setIsModalOpen(false)}
-          className="x-icon"
-          icon={faTimes}
-        />
-        <h4>values copied</h4>
-        {/* text area for global variable output */}
-        <textarea
-          readOnly
-          className="global-vars-text"
-          cols="21"
-          rows="10"
-          value={globalVars
-            .map((colorVar, index) => {
-              return `${globalVars[index].var}: ${globalVars[index].color};\n`;
-            })
-            .join("")}
-        ></textarea>
-      </section>
-    </Wrapper>
-  );
-};
 
 export default Color;
