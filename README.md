@@ -9,7 +9,6 @@ y = rgb_color(v, v, v);
 
 - tool tips for clipboard icon
 - don't need a modal to notify user that values have been copied to clipboard - better to use toastify or something similar
-- replace fontawesome icons with react icons
 - PWA
 - accessibility
 

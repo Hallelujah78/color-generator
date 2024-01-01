@@ -1,11 +1,22 @@
-import React from "react";
+import { useEffect } from "react";
 import styled from "styled-components";
-import { rgbToHex } from "../utils/utils";
+import { contrastRatio, rgbToHex } from "../utils/utils.js";
 
 const Tint = ({ color, tints, index }) => {
+  useEffect(() => {
+    tints.forEach((tint) => {
+      console.log(tint);
+      contrastRatio(tint.red, tint.green, tint.blue);
+    });
+  }, [tints]);
   return (
     <>
-      <Wrapper index={index} color={color} tints={tints}>
+      <Wrapper
+        onClick={contrastRatio}
+        index={index}
+        color={color}
+        tints={tints}
+      >
         <p className="rgb">{`${tints[index].red},${tints[index].green},${tints[index].blue}`}</p>
         <p className="hex">{`#${rgbToHex(tints[index].red)}${rgbToHex(
           tints[index].green

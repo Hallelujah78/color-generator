@@ -135,10 +135,44 @@ export const copyToClipboard = (element) => {
   // Copy the text inside the text field
   navigator.clipboard
     .writeText(element.value)
-    .then(() => {
-     
-    })
-    .catch(() => {
-      
-    });
+    .then(() => {})
+    .catch(() => {});
+};
+
+export const contrastRatio = (red, green, blue) => {
+  const whiteLuminance = 1;
+  const blackLuminance = 0;
+  const redMult = 0.2126;
+  const greenMult = 0.7152;
+  const blueMult = 0.0722;
+  let relativeLuminance;
+  let lumRed, lumGreen, lumBlue;
+  const srgbR = red / 255;
+
+  const srgbG = green / 255;
+  const srgbB = blue / 255;
+  if (srgbR <= 0.03928) {
+    lumRed = srgbR / 12.92;
+  } else {
+    lumRed = ((srgbR + 0.055) / 1.055) ^ 2.4;
+  }
+  if (srgbG <= 0.03928) {
+    lumGreen = srgbG / 12.92;
+  } else {
+    lumGreen = ((srgbG + 0.055) / 1.055) ^ 2.4;
+  }
+  if (srgbB <= 0.03928) {
+    lumBlue = srgbB / 12.92;
+  } else {
+    lumBlue = ((srgbB + 0.055) / 1.055) ^ 2.4;
+  }
+  relativeLuminance =
+    lumRed * redMult + lumGreen * greenMult + lumBlue * blueMult;
+  console.log(relativeLuminance);
+  console.log(
+    `white text: ${(whiteLuminance + 0.05) / (relativeLuminance + 0.05)}`
+  );
+  console.log(
+    `black text: ${(relativeLuminance + 0.05) / (blackLuminance + 0.05)}`
+  );
 };
