@@ -139,40 +139,38 @@ export const copyToClipboard = (element) => {
     .catch(() => {});
 };
 
-export const contrastRatio = (red, green, blue) => {
-  const whiteLuminance = 1;
-  const blackLuminance = 0;
+export const calculateLuminance = (red, green, blue) => {
   const redMult = 0.2126;
   const greenMult = 0.7152;
   const blueMult = 0.0722;
-  let relativeLuminance;
-  let lumRed, lumGreen, lumBlue;
+
+  let lumRed;
+  let lumGreen;
+  let lumBlue;
+  let luminance;
+
   const srgbR = red / 255;
 
   const srgbG = green / 255;
   const srgbB = blue / 255;
+
   if (srgbR <= 0.03928) {
     lumRed = srgbR / 12.92;
   } else {
-    lumRed = ((srgbR + 0.055) / 1.055) ^ 2.4;
+    lumRed = ((srgbR + 0.055) / 1.055) ** 2.4;
   }
   if (srgbG <= 0.03928) {
     lumGreen = srgbG / 12.92;
   } else {
-    lumGreen = ((srgbG + 0.055) / 1.055) ^ 2.4;
+    lumGreen = ((srgbG + 0.055) / 1.055) ** 2.4;
   }
   if (srgbB <= 0.03928) {
     lumBlue = srgbB / 12.92;
   } else {
-    lumBlue = ((srgbB + 0.055) / 1.055) ^ 2.4;
+    lumBlue = ((srgbB + 0.055) / 1.055) ** 2.4;
   }
-  relativeLuminance =
-    lumRed * redMult + lumGreen * greenMult + lumBlue * blueMult;
-  console.log(relativeLuminance);
-  console.log(
-    `white text: ${(whiteLuminance + 0.05) / (relativeLuminance + 0.05)}`
-  );
-  console.log(
-    `black text: ${(relativeLuminance + 0.05) / (blackLuminance + 0.05)}`
-  );
+
+  luminance = lumRed * redMult + lumGreen * greenMult + lumBlue * blueMult;
+
+  return luminance;
 };
