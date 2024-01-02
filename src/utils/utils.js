@@ -174,3 +174,16 @@ export const calculateLuminance = (red, green, blue) => {
 
   return luminance;
 };
+
+export const findHighestContrast = (luminance) => {
+  const blackLuminance = 0;
+  const whiteLuminance = 1;
+
+  const blackContrast = (luminance + 0.05) / (blackLuminance + 0.05);
+  const whiteContrast = (whiteLuminance + 0.05) / (luminance + 0.05);
+  console.log(blackContrast, whiteContrast);
+  if (blackContrast >= whiteContrast) {
+    return "#000";
+  }
+  return "#fff";
+};

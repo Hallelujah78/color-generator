@@ -1,16 +1,32 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { calculateLuminance, rgbToHex } from "../utils/utils.js";
+import {
+  calculateLuminance,
+  findHighestContrast,
+  rgbToHex,
+} from "../utils/utils.js";
 
 const Tint = ({ color, tints, index }) => {
+  const [highContrast, setHighContrast] = useState(null);
   useEffect(() => {
-    tints.forEach((tint) => {
-      calculateLuminance(tint.red, tint.green, tint.blue);
-    });
-  }, [tints]);
+    const luminance = calculateLuminance(
+      tints[index].red,
+      tints[index].green,
+      tints[index].blue
+    );
+    const highestContrast = findHighestContrast(luminance);
+    setHighContrast(highestContrast);
+  }, [tints, index]);
   return (
     <>
-      <Wrapper index={index} color={color} tints={tints}>
+      <Wrapper
+        index={index}
+        color={color}
+        tints={tints}
+        style={{
+          color: highContrast,
+        }}
+      >
         <p className="rgb">{`${tints[index].red},${tints[index].green},${tints[index].blue}`}</p>
         <p className="hex">{`#${rgbToHex(tints[index].red)}${rgbToHex(
           tints[index].green
