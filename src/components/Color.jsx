@@ -6,7 +6,12 @@ import { FaRegCopy } from "react-icons/fa";
 import { FaTimes } from "react-icons/fa";
 import rainbow from "../images/colorwheel_100x100.webp";
 
-import { generateRandomColor, copyToClipboard } from "../utils/utils";
+import {
+  generateRandomColor,
+  copyToClipboard,
+  findHighestContrast,
+  calculateLuminance,
+} from "../utils/utils";
 
 const Color = ({
   color,
@@ -19,6 +24,7 @@ const Color = ({
 }) => {
   const handleClick = () => {
     const randomColor = generateRandomColor();
+
     setColor(randomColor);
   };
   const copyVars = () => {
@@ -29,10 +35,7 @@ const Color = ({
 
   return (
     <Wrapper
-      dark={
-        color.rgb.red < 115 && color.rgb.green < 115 && color.rgb.blue < 115
-      }
-      color={color.hex}
+      color={color}
       shades={shades}
       tints={tints}
       isModalOpen={isModalOpen}
@@ -56,8 +59,8 @@ const Color = ({
             onClick={handleClick}
           ></button>
           <div className="color-value-container">
-            <h5>{color.hex}</h5>
             <h5>{`${color.rgb.red},${color.rgb.green},${color.rgb.blue}`}</h5>
+            <h5>{color.hex}</h5>
           </div>
         </div>
       </div>
@@ -87,17 +90,7 @@ const Color = ({
 };
 
 const Wrapper = styled.div`
-  ${({ dark }) => {
-    return dark
-      ? css`
-          color: #fff;
-        `
-      : css`
-          color: black;
-        `;
-  }}
-
-  background: ${(props) => props.color || "red"};
+  background: ${(props) => props.color.hex || "red"};
 
   width: 100%;
   min-width: 100%;
@@ -124,7 +117,7 @@ const Wrapper = styled.div`
     max-width: 100%;
 
     button.generate-colors {
-      border: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.7);
       margin-top: 1rem;
       background: url(${rainbow});
       background-position: center;
@@ -143,7 +136,7 @@ const Wrapper = styled.div`
     }
     .copy-container {
       button {
-        background: ${(props) => props.color || "red"};
+        background: ${(props) => props.color.hex || "red"};
         border: transparent;
       }
 
@@ -156,7 +149,6 @@ const Wrapper = styled.div`
     .copy-vars {
       font-size: 2rem;
       background: transparent;
-
       color: rgba(80, 80, 80, 0.7);
       transition: all 0.2s linear;
       &:hover {
@@ -167,6 +159,12 @@ const Wrapper = styled.div`
     }
     h5 {
       padding: 0.5rem;
+      color: ${(props) => {
+        const { red, green, blue } = props.color.rgb;
+        const luminance = calculateLuminance(red, green, blue);
+        const highestContrast = findHighestContrast(luminance);
+        return highestContrast;
+      }};
     }
   }
 

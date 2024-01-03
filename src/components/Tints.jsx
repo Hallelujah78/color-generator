@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import styled from "styled-components";
 import {
   calculateLuminance,
@@ -7,26 +6,9 @@ import {
 } from "../utils/utils.js";
 
 const Tint = ({ color, tints, index }) => {
-  const [highContrast, setHighContrast] = useState(null);
-  useEffect(() => {
-    const luminance = calculateLuminance(
-      tints[index].red,
-      tints[index].green,
-      tints[index].blue
-    );
-    const highestContrast = findHighestContrast(luminance);
-    setHighContrast(highestContrast);
-  }, [tints, index]);
   return (
     <>
-      <Wrapper
-        index={index}
-        color={color}
-        tints={tints}
-        style={{
-          color: highContrast,
-        }}
-      >
+      <Wrapper index={index} color={color} tints={tints}>
         <p className="rgb">{`${tints[index].red},${tints[index].green},${tints[index].blue}`}</p>
         <p className="hex">{`#${rgbToHex(tints[index].red)}${rgbToHex(
           tints[index].green
@@ -48,6 +30,17 @@ const Wrapper = styled.div`
     },${props.tints[props.index].blue})`;
   }};
   place-items: center;
+  p {
+    color: ${(props) => {
+      const luminance = calculateLuminance(
+        props.tints[props.index].red,
+        props.tints[props.index].green,
+        props.tints[props.index].blue
+      );
+      const highestContrast = findHighestContrast(luminance);
+      return highestContrast;
+    }};
+  }
   p.rgb {
     margin-top: 15%;
   }

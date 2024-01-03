@@ -181,8 +181,8 @@ export const findHighestContrast = (luminance) => {
 
   const blackContrast = (luminance + 0.05) / (blackLuminance + 0.05);
   const whiteContrast = (whiteLuminance + 0.05) / (luminance + 0.05);
-  console.log(blackContrast, whiteContrast);
-  if (blackContrast >= whiteContrast) {
+
+  if (blackContrast >= 4.5) {
     return "#000";
   }
   return "#fff";

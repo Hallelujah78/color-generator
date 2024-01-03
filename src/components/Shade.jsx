@@ -1,6 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import { rgbToHex } from "../utils/utils";
+import {
+  rgbToHex,
+  calculateLuminance,
+  findHighestContrast,
+} from "../utils/utils";
 
 const Shade = ({ color, shades, index }) => {
   return (
@@ -26,6 +30,17 @@ const Wrapper = styled.div`
     },${props.shades[props.index].blue})`;
   }};
   place-items: center;
+  p {
+    color: ${(props) => {
+      const luminance = calculateLuminance(
+        props.shades[props.index].red,
+        props.shades[props.index].green,
+        props.shades[props.index].blue
+      );
+      const highestContrast = findHighestContrast(luminance);
+      return highestContrast;
+    }};
+  }
   p.rgb {
     margin-top: 15%;
   }

@@ -1,12 +1,9 @@
 # To do
 
-- Contrast ratio for text and background color
-
-```js
-v = (r + g + b) / 3 > 128 ? 0 : 255;
-y = rgb_color(v, v, v);
-```
-
+- UI update gets slower and slower the more times you generate a random color
+  - believe this has something to do with new class names being generated each time we update the background color and font color
+  - investigate using attrs with styled components to fix this issue
+- ~~Contrast ratio for text and background color~~ DONE
 - tool tips for clipboard icon
 - don't need a modal to notify user that values have been copied to clipboard - better to use toastify or something similar
 - PWA
