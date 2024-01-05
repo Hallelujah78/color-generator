@@ -1,11 +1,17 @@
+// libraries
 import styled from "styled-components";
+import { FaRegCopy } from "react-icons/fa";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+// components
 import Shade from "./Shade";
 import Tint from "./Tints";
 
-import { FaRegCopy, FaTimes } from "react-icons/fa";
-
+// assets
 import rainbow from "../images/colorwheel_100x100.webp";
 
+// utils
 import {
   generateRandomColor,
   copyToClipboard,
@@ -13,33 +19,37 @@ import {
   calculateLuminance,
 } from "../utils/utils";
 
-const Color = ({
-  color,
-  setColor,
-  shades,
-  tints,
-  globalVars,
-  isModalOpen,
-  setIsModalOpen,
-}) => {
+const Color = ({ color, setColor, shades, tints, globalVars }) => {
   const handleClick = () => {
     const randomColor = generateRandomColor();
 
     setColor(randomColor);
   };
   const copyVars = () => {
-    setIsModalOpen(true);
+    toast(
+      <div
+        className="toast-message"
+        style={{ display: "grid", placeContent: "center" }}
+      >
+        <br />
+        <h4>Values Copied to Clipboard!</h4>
+        <br />
+        {globalVars.map((colorVar, index) => {
+          return (
+            <p key={globalVars[index].color}>
+              {globalVars[index].var}: {globalVars[index].color}
+            </p>
+          );
+        })}
+        <br />
+      </div>
+    );
     const globalVarsDom = document.querySelector(".global-vars-text");
     copyToClipboard(globalVarsDom);
   };
 
   return (
-    <Wrapper
-      color={color}
-      shades={shades}
-      tints={tints}
-      isModalOpen={isModalOpen}
-    >
+    <Wrapper color={color} shades={shades} tints={tints}>
       <div className="shade-container">
         {shades.map((shade, index) => {
           return <Shade key={index} index={index} shades={shades}></Shade>;
@@ -73,8 +83,6 @@ const Color = ({
         })}
       </div>
       <section className="overlay">
-        <FaTimes onClick={() => setIsModalOpen(false)} className="x-icon" />
-        <h4>values copied</h4>
         {/* text area for global variable output */}
         <textarea
           readOnly
@@ -195,32 +203,8 @@ const Wrapper = styled.div.attrs(({ color }) => ({
     z-index: 999;
     background: white;
     border-radius: 0.5rem;
-    display: ${(props) => (props.isModalOpen ? "grid" : "none")};
-    h4 {
-      text-align: center;
-      padding: 0.25rem 0rem;
-      font-weight: 400;
-      color: gray;
-      border-top-left-radius: 0.5rem;
-      border-top-right-radius: 0.5rem;
-      background: rgba(50, 255, 50, 0.5);
-    }
-  }
-  .x-icon {
-    position: absolute;
-    right: 5%;
-    top: 5%;
-    color: #5e033d;
-    font-size: 2rem;
-    transition: all 0.5s linear;
-    &:hover {
-      color: #c377a8;
-      transform: scale(1.1);
-      cursor: pointer;
-    }
+    display: none;
   }
 `;
 
 export default Color;
-
-//  background: ${({ color }) => color.hex};

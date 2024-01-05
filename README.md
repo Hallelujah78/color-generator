@@ -1,11 +1,8 @@
+# Next commit
+
 # To do
 
-- UI update gets slower and slower the more times you generate a random color
-  - believe this has something to do with new class names being generated each time we update the background color and font color
-  - investigate using attrs with styled components to fix this issue
-- ~~Contrast ratio for text and background color~~ DONE
 - tool tips for clipboard icon
-- don't need a modal to notify user that values have been copied to clipboard - better to use toastify or something similar
 - PWA
 - accessibility
 

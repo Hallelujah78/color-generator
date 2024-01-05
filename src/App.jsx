@@ -1,7 +1,7 @@
 import Color from "./components/Color";
 import { useState, useEffect } from "react";
 import { GlobalStyle } from "./styles/GlobalStyles";
-
+import { ToastContainer } from "react-toastify";
 import {
   generateRandomColor,
   generateShades,
@@ -18,7 +18,6 @@ function App() {
   const [globalVars, setGlobalVars] = useState(
     generateGlobalVars(tints, shades, startingColor)
   );
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const newTints = generateTints(color);
@@ -30,10 +29,9 @@ function App() {
 
   return (
     <>
+      <ToastContainer />
       <GlobalStyle />
       <Color
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
         tints={tints}
         setTints={setTints}
         color={color}
