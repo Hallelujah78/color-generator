@@ -18,29 +18,25 @@ const Tint = ({ color, tints, index }) => {
   );
 };
 
-const Wrapper = styled.div`
-  min-width: 25%;
-  font-size: 0.9rem;
-
-  display: grid;
-  min-height: 30%;
-  background: ${(props) => {
-    return `rgb(${props.tints[props.index].red},${
+const Wrapper = styled.div.attrs((props) => ({
+  style: {
+    background: `rgb(${props.tints[props.index].red},${
       props.tints[props.index].green
-    },${props.tints[props.index].blue})`;
-  }};
-  place-items: center;
-  p {
-    color: ${(props) => {
-      const luminance = calculateLuminance(
+    },${props.tints[props.index].blue})`,
+    color: findHighestContrast(
+      calculateLuminance(
         props.tints[props.index].red,
         props.tints[props.index].green,
         props.tints[props.index].blue
-      );
-      const highestContrast = findHighestContrast(luminance);
-      return highestContrast;
-    }};
-  }
+      )
+    ),
+  },
+}))`
+  min-width: 25%;
+  font-size: 0.9rem;
+  display: grid;
+  min-height: 30%;
+  place-items: center;
   p.rgb {
     margin-top: 15%;
   }

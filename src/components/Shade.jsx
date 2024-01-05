@@ -19,28 +19,25 @@ const Shade = ({ color, shades, index }) => {
   );
 };
 
-const Wrapper = styled.div`
+const Wrapper = styled.div.attrs((props) => ({
+  style: {
+    background: `rgb(${props.shades[props.index].red},${
+      props.shades[props.index].green
+    },${props.shades[props.index].blue})`,
+    color: findHighestContrast(
+      calculateLuminance(
+        props.shades[props.index].red,
+        props.shades[props.index].green,
+        props.shades[props.index].blue
+      )
+    ),
+  },
+}))`
   min-width: 25%;
   font-size: 0.9rem;
   display: grid;
   min-height: 30%;
-  background: ${(props) => {
-    return `rgb(${props.shades[props.index].red},${
-      props.shades[props.index].green
-    },${props.shades[props.index].blue})`;
-  }};
   place-items: center;
-  p {
-    color: ${(props) => {
-      const luminance = calculateLuminance(
-        props.shades[props.index].red,
-        props.shades[props.index].green,
-        props.shades[props.index].blue
-      );
-      const highestContrast = findHighestContrast(luminance);
-      return highestContrast;
-    }};
-  }
   p.rgb {
     margin-top: 15%;
   }

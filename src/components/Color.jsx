@@ -1,9 +1,9 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import Shade from "./Shade";
 import Tint from "./Tints";
 
-import { FaRegCopy } from "react-icons/fa";
-import { FaTimes } from "react-icons/fa";
+import { FaRegCopy, FaTimes } from "react-icons/fa";
+
 import rainbow from "../images/colorwheel_100x100.webp";
 
 import {
@@ -46,8 +46,11 @@ const Color = ({
         })}
       </div>
       <div className="color-container">
-        <div className="copy-container">
-          <button aria-label="copy color values to clipboard">
+        <div className="copy-container" style={{ background: `${color.hex}` }}>
+          <button
+            aria-label="copy color values to clipboard"
+            style={{ background: `${color.hex}` }}
+          >
             <FaRegCopy onClick={() => copyVars()} className="copy-vars" />
           </button>
         </div>
@@ -89,9 +92,14 @@ const Color = ({
   );
 };
 
-const Wrapper = styled.div`
-  background: ${(props) => props.color.hex || "red"};
-
+const Wrapper = styled.div.attrs(({ color }) => ({
+  style: {
+    background: `${color.hex}`,
+    color: findHighestContrast(
+      calculateLuminance(color.rgb.red, color.rgb.green, color.rgb.blue)
+    ),
+  },
+}))`
   width: 100%;
   min-width: 100%;
   height: 100vh;
@@ -136,7 +144,6 @@ const Wrapper = styled.div`
     }
     .copy-container {
       button {
-        background: ${(props) => props.color.hex || "red"};
         border: transparent;
       }
 
@@ -159,12 +166,6 @@ const Wrapper = styled.div`
     }
     h5 {
       padding: 0.5rem;
-      color: ${(props) => {
-        const { red, green, blue } = props.color.rgb;
-        const luminance = calculateLuminance(red, green, blue);
-        const highestContrast = findHighestContrast(luminance);
-        return highestContrast;
-      }};
     }
   }
 
@@ -221,3 +222,5 @@ const Wrapper = styled.div`
 `;
 
 export default Color;
+
+//  background: ${({ color }) => color.hex};
