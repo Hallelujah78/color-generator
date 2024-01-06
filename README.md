@@ -1,78 +1,57 @@
-# Next commit
+# :rainbow: Tints & Shades Generator
 
-# To do
+---
 
-- tool tips for clipboard icon
-- PWA
-- accessibility
+## Description
 
-# Getting Started with Create React App
+This is a tints and shades generator inspired by the [Shadowlord](https://noeldelgado.github.io/shadowlord/ "click to visit the Shadowlord tint and shade generator") tints and shades generator website.
+
+My site differs in that you can't pick a base color; you can only generate a random color and tints and shades are created based on that random color.
+
+---
+
+## Running It
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+In the project directory, you can run `npm start` which runs the app in development mode.
 
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## Usage
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Click the color wheel button to generate a random color and the corresponding tints and shades.
 
-### `npm run build`
+Click the `copy` button to copy the generated colors to the clipboard. You can then paste these values into your project as global variables like so:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```css
+--primary-100: #f7b298;
+--primary-200: #f6a586;
+--primary-300: #f59671;
+--primary-400: #f48459;
+--primary-500: #f15c22;
+--primary-600: #d8521e;
+--primary-700: #c2491b;
+--primary-800: #ae4118;
+--primary-900: #9c3a15;
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Cool Stuff
 
-### `npm run eject`
+I created a `calculateLuminance` function that calculates the relative luminance of each color. We can then dynamically set the font color to be white or black, depending on which offers the best contrast ratio with the background.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+I calculate relative luminance for the sRGB colorspace as set out in [WCAG 2.x](https://www.w3.org/WAI/GL/wiki/Relative_luminance "click to view a w3.org page about relative luminance")
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Next Commit Notes
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+---
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## To Do
 
-## Learn More
+- migrate to Vite from CRA perchance?
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
