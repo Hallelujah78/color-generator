@@ -61,8 +61,21 @@ const Color = ({ color, setColor, shades, tints, globalVars }) => {
             aria-label="copy color values to clipboard"
             style={{ background: `${color.hex}` }}
           >
-            <FaRegCopy onClick={() => copyVars()} className="copy-vars" />
+            <FaRegCopy
+              style={{
+                color: `${findHighestContrast(
+                  calculateLuminance(
+                    color.rgb.red,
+                    color.rgb.green,
+                    color.rgb.blue
+                  )
+                )}`,
+              }}
+              onClick={() => copyVars()}
+              className="copy-vars"
+            />
           </button>
+          copy
         </div>
         <div className="button-container">
           <button
